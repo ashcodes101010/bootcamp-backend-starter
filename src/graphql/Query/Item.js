@@ -1,4 +1,4 @@
-const Item = require('../../models/Book')
+const Item = require('../../models/Item')
 const Review = require('../../models/Review')
 const Tag = requre('../../models/Tag')
 
