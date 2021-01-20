@@ -4,8 +4,16 @@ module.exports = gql`
   type Mutation {
     login(email: String!, password: String!): AuthReturn!
     register(input: RegisterInput!): AuthReturn!
-    createItem(input: ItemInput): Item!
-    createCart(input: CartInput): Cart!
+
+    addCartItem(input: CartInput): Cart!
+    removeCartItem(input: Cart): Cart!
+
+    updateItem(input: Item!): Item!
+    createItem(input: ItemInput!): Item!
+    deleteItem(input: Item!): Item!
+
+    addTag(itemId: String!, tags: Tag!): Item!
+    removeTag(itemId: String!, tags: Tag!): Item!
   }
 
   type Query {
@@ -56,7 +64,7 @@ module.exports = gql`
     id: ID!
     buyer: User!
     item: Item!
-    review: String!
+    comment: String!
     rating: Int!
   }
  
@@ -78,14 +86,6 @@ module.exports = gql`
     state: String!
     zip: String!
     createdAt: String!
-  }
- 
-  input RegisterInput {
-    username: String!
-    password: String!
-    email: String!
-    age: Int!
-    money: Float!
   }
  
   input ItemInput {
@@ -128,6 +128,7 @@ module.exports = gql`
     age: Int!
     password: String!
   }
+  
   input AddressInput {
     street: String!
     city: String!

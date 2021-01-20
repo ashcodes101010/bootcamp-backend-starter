@@ -32,7 +32,7 @@ const createItem = async (obj, { input: { sellerId, name, imgUrl, description, p
         price,
         tags,
         soldOut,
-        stock
+        stock,
       })
     return { create }
 }
