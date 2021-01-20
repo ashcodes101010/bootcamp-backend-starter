@@ -121,13 +121,6 @@ module.exports = gql`
     token: String!
     user: User!
   }
- 
-  input RegisterInput {
-    email: String!
-    username: String!
-    age: Int!
-    password: String!
-  }
   
   input AddressInput {
     street: String!
