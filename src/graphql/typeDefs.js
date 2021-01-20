@@ -5,6 +5,7 @@ module.exports = gql`
     login(email: String!, password: String!): AuthReturn!
     register(input: RegisterInput!): AuthReturn!
     updatePass(id: ID!, password: String!): User!
+    addMoney(id: ID!, money: Float!): User!
 
     addCartItem(input: CartInput): Cart!
     removeCartItem(input: CartInput): Cart!

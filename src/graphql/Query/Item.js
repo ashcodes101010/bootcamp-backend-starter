@@ -24,8 +24,8 @@ const reviews = async ({ id }) => {
 }
 
 const tags = async ({ id }) => {
-  const tags = await Tag.query().where('itemId', id)
-  return tags
+  const t = await Tag.query().where('itemId', id)
+  return t
 }
 
 const resolver = {
