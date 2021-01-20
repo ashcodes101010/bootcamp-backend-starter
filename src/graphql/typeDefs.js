@@ -80,7 +80,7 @@ module.exports = gql`
     createdAt: String!
   }
  
-  type RegisterInput {
+  input RegisterInput {
     username: String!
     password: String!
     email: String!
@@ -88,7 +88,7 @@ module.exports = gql`
     money: Float!
   }
  
-  type ItemInput {
+  input ItemInput {
     sellerId: String!
     name: String!
     imgUrl: String!
@@ -99,19 +99,19 @@ module.exports = gql`
     stock: Int!
   }
  
-  type CartInput {
+  input CartInput {
     userId: String!
     itemId: [String!]!
   }
  
-  type ReviewInput {
+  input ReviewInput {
     buyerId: String!
     itemId: String!
     comment: String!
     rating: Int!
   }
  
-  type TransactionInput {
+  input TransactionInput {
     itemsBoughtId: String!
     buyerId: String!
     sellersId: [String!]!
