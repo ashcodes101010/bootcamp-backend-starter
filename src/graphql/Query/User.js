@@ -16,32 +16,32 @@ const allUsers = async () => {
   }
 }
 
-const user = async (obj, { id }, context) => {
+const user = async (obj, { id }) => {
   const userInfo = await User.query().findOne('id', id)
   return userInfo
 }
 
-const itemsBought = async ({ id }, params, context) => {
+const itemsBought = async ({ id }) => {
   const bought = await Transaction.query().where('buyerId', id)
   return bought
 }
 
-const itemsSelling = async ({ id }, params, context) => {
+const itemsSelling = async ({ id }) => {
   const inUserShop = await Item.query().where('sellerId', id)
   return inUserShop
 }
 
-const cart = async ({ id }, params, context) => {
+const cart = async ({ id }) => {
   const itemsInCart = await Cart.query().where('userId', id).groupBy('itemId')
   return itemsInCart
 }
 
-const reviewsReceived = async ({ id }, params, context) => {
+const reviewsReceived = async ({ id }) => {
   const itemReviews = await Review.query().where('sellerId', id).groupBy('itemId')
   return itemReviews
 }
 
-const reviewsWritten = async ({ id }, params, context) => {
+const reviewsWritten = async ({ id }) => {
   const itemReviews = await Review.query().where('buyerId', id).groupBy('itemId')
   return itemReviews
 }

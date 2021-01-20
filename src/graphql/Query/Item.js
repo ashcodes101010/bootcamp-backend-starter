@@ -13,17 +13,17 @@ const allItems = async () => {
   }
 }
 
-const item = async (obj, { sellerId }, context) => {
-  const itemInfo = await Item.query().findOne('id', sellerId)
+const item = async (obj, { id }) => {
+  const itemInfo = await Item.query().findOne('id', id)
   return itemInfo
 }
 
-const reviews = async ({ id }, params, context) => {
+const reviews = async ({ id }) => {
   const ratingAndReview = await Review.query().where('itemId', id)
   return ratingAndReview
 }
 
-const tags = async ({ id }, params, context) => {
+const tags = async ({ id }) => {
   const tags = await Tag.query().where('itemId', id)
   return tags
 }
