@@ -16,7 +16,7 @@ const allUsers = async () => {
     }
 }
 
-const user = async (obj, { userId }, context) => {
+const user = async (obj, { id }, context) => {
     const userInfo = await User.query().findOne('id', userId)
     return userInfo
 }
