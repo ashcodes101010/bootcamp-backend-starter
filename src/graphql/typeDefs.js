@@ -21,7 +21,7 @@ module.exports = gql`
     transaction(id: ID!): Transaction!
     user(id: ID!): User!
     item(id: ID!): Item!
-    searchItems(input: String!, tags: [String!]!): [Item!]!
+    searchItems(input: String!): [Item!]! 
   }
   
   type User {

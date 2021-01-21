@@ -13,6 +13,12 @@ const allItems = async () => {
   }
 }
 
+// previously called searchItemsNoTag, now this is the only search method
+const searchItems = async (obj, { input } ) => {
+  const itemsWithoutTags = await Item.query().where('name', 'like', %${input}%)
+  return itemsWithoutTags
+}
+
 const item = async (obj, { id }) => {
   const itemInfo = await Item.query().findOne('id', id)
   return itemInfo
@@ -36,6 +42,7 @@ const tags = async ({ id }) => {
 const resolver = {
   Query: {
     allItems,
+    searchItems,
     item,
   },
   Item: {
