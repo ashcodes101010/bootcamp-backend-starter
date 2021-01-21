@@ -6,11 +6,17 @@ const User = require('../../models/User')
 
 const allItems = async () => {
   try {
-    const users = await Item.query()
-    return users
+    const items = await Item.query()
+    return items
   } catch (err) {
-    throw new Error('Failed to get users')
+    throw new Error('Failed to get item')
   }
+}
+
+// previously called searchItemsNoTag, now this is the only search method
+const searchItems = async (obj, { input }) => {
+  const itemsWithoutTags = await Item.query().where('name', 'like', `%${input}%`).andWhere('deleted', false)
+  return itemsWithoutTags
 }
 
 const item = async (obj, { id }) => {
@@ -36,6 +42,7 @@ const tags = async ({ id }) => {
 const resolver = {
   Query: {
     allItems,
+    searchItems,
     item,
   },
   Item: {

@@ -8,8 +8,9 @@ module.exports = gql`
     addMoney(id: ID!, money: Float!): User!
 
     addCartItem(input: CartInput): Cart!
-    removeCartItem(input: CartInput): Cart!
+    removeCartItem(id: ID!): Cart!
 
+    decrementStock(id: ID!): Item!
     updateItem(id: ID!, input: ItemInput!): Item!
     createItem(input: ItemInput!): Item!
     deleteItem(id: ID!): Item!
@@ -21,9 +22,10 @@ module.exports = gql`
     transaction(id: ID!): Transaction!
     user(id: ID!): User!
     item(id: ID!): Item!
-    searchItems(input: String!): [Item!]!
+    cart(id: ID!): [Cart!]! 
+    searchItems(input: String!): [Item!]! 
   }
-  
+
   type User {
     id: ID!
     username: String!
@@ -81,8 +83,9 @@ module.exports = gql`
   }
  
   type Cart {
+    id: ID!
     user: User!
-    items: [Item!]!
+    item: Item!
   }
  
   type Address {

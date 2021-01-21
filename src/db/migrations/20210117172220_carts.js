@@ -1,5 +1,11 @@
 exports.up = knex => knex.schema.createTable('carts', table => {
   table
+    .uuid('id')
+    .notNullable()
+    .primary()
+    .defaultTo(knex.raw('uuid_generate_v4()'))
+
+  table
     .uuid('itemId')
     .references('items.id')
 

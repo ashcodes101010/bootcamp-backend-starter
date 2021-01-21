@@ -3,6 +3,7 @@ const userData = require('./user')
 const itemData = require('./item')
 
 casual.define('cartItem', (userId, itemId) => ({
+  id: casual.uuid,
   userId,
   itemId,
   createdAt: casual.moment,
