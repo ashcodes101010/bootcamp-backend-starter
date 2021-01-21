@@ -10,6 +10,7 @@ module.exports = gql`
     addCartItem(input: CartInput): Cart!
     removeCartItem(input: CartInput): Cart!
 
+    decrementStock(id: ID!): Item!
     updateItem(id: ID!, input: ItemInput!): Item!
     createItem(input: ItemInput!): Item!
     deleteItem(id: ID!): Item!

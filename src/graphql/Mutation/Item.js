@@ -4,6 +4,17 @@ const knex = require('../../lib/knex')
 const Review = require('../../models/Review')
 const Cart = require('../../models/Cart')
 
+const decrementStock = async (obj, { id }) => {
+  try {
+    const item = await Item.query().findById(id)
+    const update = await Item.query().findById(id).patch({
+      stock: Number(item.stock) - 1,
+    }).returning('*')
+    return update
+  } catch (err) {
+    throw new Error(err)
+  }
+}
 const updateItem = async (obj, {
   id,
   input: {
@@ -91,7 +102,9 @@ const deleteItem = async (obj, { id }) => {
 }
 
 const resolver = {
-  Mutation: { updateItem, createItem, deleteItem },
+  Mutation: {
+    updateItem, createItem, deleteItem, decrementStock,
+  },
 }
 
 module.exports = resolver
