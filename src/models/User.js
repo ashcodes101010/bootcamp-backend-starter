@@ -4,6 +4,7 @@ const Cart = require('./Cart')
 const Item = require('./Item')
 const Review = require('./Review')
 const Transaction = require('./Transaction')
+const Address = require('./Address')
 
 class User extends BaseModel {
   static get tableName() {
@@ -42,6 +43,14 @@ class User extends BaseModel {
         join: {
           from: 'users.id',
           to: 'cart.userId'
+        }
+      },
+      address: {
+        relation: BelongsToOneRelation,
+        modelClass: Address,
+        join: {
+          from: 'users.addressId',
+          to: 'addresses.id'
         }
       }
     }

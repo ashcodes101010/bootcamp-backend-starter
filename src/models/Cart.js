@@ -19,7 +19,7 @@ class Cart extends BaseModel {
         },
       },
       user: {
-        relation: BelongsToOneRelation,
+        relation: HasManyRelations,
         modelClass: User,
         join: {
           from: 'carts.userId',

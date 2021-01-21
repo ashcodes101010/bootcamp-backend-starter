@@ -21,7 +21,7 @@ module.exports = gql`
     transaction(id: ID!): Transaction!
     user(id: ID!): User!
     item(id: ID!): Item!
-    searchItems(input: String!, tags: [String!]!): [Item!]!
+    searchItems(input: String!): [Item!]!
   }
   
   type User {
@@ -105,8 +105,8 @@ module.exports = gql`
   }
  
   input CartInput {
-    userId: String!
-    itemId: [String!]!
+    userId: ID!
+    itemId: ID!
   }
  
   input ReviewInput {
@@ -140,5 +140,6 @@ module.exports = gql`
     username: String!
     age: Int!
     password: String!
+    address: AddressInput!
   }
 `

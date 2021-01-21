@@ -1,5 +1,6 @@
 const { UserInputError } = require('apollo-server-express')
 const User = require('../../models/User')
+const Address = require('../../models/Address')
 const {
   hashPassword, comparePassword, createToken,
 } = require('../../lib/auth')
@@ -39,16 +40,31 @@ const login = async (obj, { email, password }) => {
   return { user, token }
 }
 
-const register = async (obj, { input: { email, password } }) => {
+const register = async (obj, { input: { username, email, password, age, address: { street, city, state, zip, country } }}) => {
   const emailExists = await User.query().findOne({ email })
   if (emailExists) {
     throw new UserInputError('Email is already in use')
   }
-
   const passwordHash = await hashPassword(password)
+
   const user = await User.query().insertAndFetch({
     email,
+    username,
     password: passwordHash,
+    age,
+  }).returning('id')
+
+  const addressDetails = await Address.query().insertAndFetch({
+    street,
+    city,
+    state,
+    zip,
+    country,
+    user: user
+  }).returning('id')
+
+  const addAddressId = await User.query().patch({
+    address: addressDetails
   })
 
   // If successful registration, set authentication information
@@ -57,7 +73,39 @@ const register = async (obj, { input: { email, password } }) => {
   }
   const token = createToken(payload)
 
-  return { user, token }
+
+
+
+  // try {
+  //   const trans = await knex.transaction(async trx => {
+  //     const create = await Address.query(trx).insert({
+  //       street,
+  //       city,
+  //       state,
+  //       zip,
+  //       country
+  //     }).returning('*')
+  //     await Promise.all(tags.map(async tag => {
+  //       await User.query(trx).insert({
+  //         addressId: create.id,
+  //         tag: tag.tag,
+  //       })
+  //     }))
+  //     return create
+  //   })
+  //   return trans
+  // } catch (err) {
+  //   throw new Error(err)
+  // }
+
+
+
+
+
+
+
+
+  return { user, addressDetails, addAddressId, token }
 }
 
 const resolver = {
