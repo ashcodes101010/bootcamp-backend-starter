@@ -6,10 +6,10 @@ const User = require('../../models/User')
 
 const allItems = async () => {
   try {
-    const users = await Item.query()
-    return users
+    const items = await Item.query()
+    return items
   } catch (err) {
-    throw new Error('Failed to get users')
+    throw new Error('Failed to get item')
   }
 }
 

@@ -22,7 +22,6 @@ module.exports = gql`
     user(id: ID!): User!
     item(id: ID!): Item!
     searchItems(input: String!): [Item!]! 
-  }
   
   type User {
     id: ID!
