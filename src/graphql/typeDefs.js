@@ -21,6 +21,7 @@ module.exports = gql`
   type Query {
     allUsers: [User!]!
     allItems: [Item!]!
+    transaction(id: ID!): Transaction!
     user(id: ID!): User!
     item(id: ID!): Item!
     searchItems(input: String!, tags: [String!]!): [Item!]!
@@ -37,7 +38,7 @@ module.exports = gql`
     money: Float!
     cart: [Item!]
     itemsSelling: [Item!]
-    itemsBought: [Item!]
+    transactions: [Transaction!]
     reviewsWritten: [Review!]
     reviewsReceived: [Review!]!
     address: Address
@@ -75,8 +76,9 @@ module.exports = gql`
   }
  
   type Transaction {
-    itemsBought: [Item!]!
-    timeBought: String!
+    id: ID!
+    item: Item!
+    boughtAt: String!
     buyer: User!
   }
  
@@ -117,7 +119,7 @@ module.exports = gql`
   }
  
   input TransactionInput {
-    itemsBoughtId: String!
+    itemId: String!
     buyerId: String!
     sellersId: [String!]!
   }

@@ -1,6 +1,7 @@
 const Item = require('../../models/Item')
 const Review = require('../../models/Review')
 const Tag = require('../../models/Tag')
+const User = require('../../models/User')
 
 
 const allItems = async () => {
@@ -15,6 +16,11 @@ const allItems = async () => {
 const item = async (obj, { id }) => {
   const itemInfo = await Item.query().findOne('id', id)
   return itemInfo
+}
+
+const seller = async ({ sellerId }) => {
+  const user = await User.query().findById(sellerId)
+  return user
 }
 
 const reviews = async ({ id }) => {
@@ -35,6 +41,7 @@ const resolver = {
   Item: {
     reviews,
     tags,
+    seller,
   },
 }
 

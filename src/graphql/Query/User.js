@@ -11,23 +11,22 @@ const allUsers = async () => {
     const users = await User.query()
     return users
   } catch (err) {
-    console.log(err)
     throw new Error('Failed to get users')
   }
 }
 
 const user = async (obj, { id }) => {
-  const userInfo = await User.query().findOne('id', id)
+  const userInfo = await User.query().findById(id)
   return userInfo
 }
 
-const itemsBought = async ({ id }) => {
-  const bought = await Transaction.query().where('buyerId', id)
-  return bought
+const transactions = async ({ id }) => {
+  const trans = await Transaction.query().where('buyerId', id).orderBy('boughtAt')
+  return trans
 }
 
 const itemsSelling = async ({ id }) => {
-  const inUserShop = await Item.query().where('sellerId', id)
+  const inUserShop = await Item.query().where('sellerId', id).orderBy('createdAt')
   return inUserShop
 }
 
@@ -53,7 +52,7 @@ const resolver = {
   },
   User: {
     itemsSelling,
-    itemsBought,
+    transactions,
     cart,
     reviewsReceived,
     reviewsWritten,
