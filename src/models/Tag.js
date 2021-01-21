@@ -9,14 +9,14 @@ class Tag extends BaseModel {
 
   static get relationMappings() {
     return {
-      item:  {
+      item: {
         relation: BelongsToOneRelation,
         modelClass: Item,
         join: {
           from: 'tags.itemId',
-          to: 'items.id'
-        }
-      }
+          to: 'items.id',
+        },
+      },
     }
   }
 }

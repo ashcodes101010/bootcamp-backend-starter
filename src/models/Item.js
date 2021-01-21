@@ -12,32 +12,32 @@ class Item extends BaseModel {
 
   static get relationMappings() {
     return {
-      user:  {
+      user: {
         relation: BelongsToOneRelation,
         modelClass: User,
         join: {
           from: 'items.id',
-          to: 'users.sellerId'
-        }
+          to: 'users.sellerId',
+        },
       },
       transactions: {
-          relation: HasManyRelation,
-          modelClass: Transaction,
-          from: 'items.id',
-          to: 'transactions.itemId'
+        relation: HasManyRelation,
+        modelClass: Transaction,
+        from: 'items.id',
+        to: 'transactions.itemId',
       },
       tags: {
-          relation: HasManyRelation,
-          modelClass: Tag,
-          from: 'items.id',
-          to: 'tags.itemId'
+        relation: HasManyRelation,
+        modelClass: Tag,
+        from: 'items.id',
+        to: 'tags.itemId',
       },
       cart: {
-          relation: HasManyRelation,
-          modelClass: Cart,
-          from: 'items.id',
-          to: 'cart.itemId'
-      }
+        relation: HasManyRelation,
+        modelClass: Cart,
+        from: 'items.id',
+        to: 'cart.itemId',
+      },
     }
   }
 }

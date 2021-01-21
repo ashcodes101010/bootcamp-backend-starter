@@ -10,22 +10,22 @@ class Review extends BaseModel {
 
   static get relationMappings() {
     return {
-      item:  {
+      item: {
         relation: BelongsToOneRelation,
         modelClass: Item,
         join: {
           from: 'reviews.itemId',
-          to: 'items.id'
-        }
+          to: 'items.id',
+        },
       },
       user: {
-          relation: BelongsToOneRelation,
-          modelClass: User,
-          join: {
-              from: 'reviews.buyerId',
-              to: 'users.id'
-          }
-      }
+        relation: BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'reviews.buyerId',
+          to: 'users.id',
+        },
+      },
     }
   }
 }

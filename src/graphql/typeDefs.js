@@ -101,7 +101,6 @@ module.exports = gql`
     description: String!
     price: Float!
     tags: [String!]
-    soldOut: Boolean!
     stock: Int!
   }
  

@@ -8,7 +8,6 @@ const allItems = async () => {
     const users = await Item.query()
     return users
   } catch (err) {
-    console.log(err)
     throw new Error('Failed to get users')
   }
 }
