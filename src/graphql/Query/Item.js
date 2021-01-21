@@ -15,7 +15,7 @@ const allItems = async () => {
 
 // previously called searchItemsNoTag, now this is the only search method
 const searchItems = async (obj, { input }) => {
-  const itemsWithoutTags = await Item.query().where('name', 'like', `%${input}%`)
+  const itemsWithoutTags = await Item.query().where('name', 'like', `%${input}%`).andWhere('deleted', false)
   return itemsWithoutTags
 }
 
