@@ -5,27 +5,27 @@ const User = require('./User')
 
 class Cart extends BaseModel {
   static get tableName() {
-    return 'cart'
+    return 'carts'
   }
 
   static get relationMappings() {
     return {
-      items:  {
+      items: {
         relation: HasManyRelations,
         modelClass: Item,
         join: {
-          from: 'cart.itemId',
-          to: 'items.id'
-        }
+          from: 'carts.itemId',
+          to: 'items.id',
+        },
       },
       user: {
-          relation: BelongsToOneRelation,
-          modelClass: User,
-          join: {
-              from: 'cart.userId',
-              to: 'user.id'
-          }
-      }
+        relation: BelongsToOneRelation,
+        modelClass: User,
+        join: {
+          from: 'carts.userId',
+          to: 'user.id',
+        },
+      },
     }
   }
 }

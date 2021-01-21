@@ -1,7 +1,8 @@
 const Item = require('../../models/Item')
-const User = require('../../models/User')
 const Tag = require('../../models/Tag')
 const knex = require('../../lib/knex')
+const Review = require('../../models/Review')
+const Cart = require('../../models/Cart')
 
 const updateItem = async (obj, {
   id,
@@ -68,13 +69,25 @@ const createItem = async (obj, {
   }
 }
 
-const deleteItem = async (obj, { input: { id } }) => {
-  const itemExists = await Item.query().findById(id)
-  if (!itemExists) {
-    throw new Error('Item does not exist')
+const deleteItem = async (obj, { id }) => {
+  try {
+    const item = await Item.query().findById(id)
+    if (!item) {
+      throw new Error('Item does not exist')
+    }
+    const trans = await knex.transaction(async trx => {
+      await Review.query(trx).delete().where('itemId', id)
+      await Cart.query(trx).delete().where('itemId', id)
+      const remove = await Item.query(trx).findById(id).patch({
+        deleted: true,
+      }).returning('*')
+      await Tag.query(trx).delete().where('itemId', id)
+      return remove
+    })
+    return trans
+  } catch (err) {
+    throw new Error(err)
   }
-  const remove = await User.query().delete().findById(id).returning('*')
-  return remove
 }
 
 const resolver = {

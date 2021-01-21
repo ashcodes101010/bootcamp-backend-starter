@@ -16,7 +16,7 @@ exports.up = knex => knex.schema.createTable('items', table => {
   table
     .string('imgUrl')
     .defaultTo('https://www.gamudacove.com.my/media/img/default-img.jpg')
-  
+
   table
     .string('description', 1000)
     .notNullable()
@@ -27,6 +27,10 @@ exports.up = knex => knex.schema.createTable('items', table => {
 
   table
     .boolean('soldOut')
+    .defaultTo(false)
+
+  table
+    .boolean('deleted')
     .defaultTo(false)
 
   table

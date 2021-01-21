@@ -12,7 +12,7 @@ module.exports = gql`
 
     updateItem(id: ID!, input: ItemInput!): Item!
     createItem(input: ItemInput!): Item!
-    deleteItem(input: ItemInput!): Item!
+    deleteItem(id: ID!): Item!
 
     addTag(itemId: String!, tags: TagInput!): Item!
     removeTag(itemId: String!, tags: TagInput!): Item!
@@ -54,6 +54,7 @@ module.exports = gql`
     tags: [Tag!]!
     soldOut: Boolean!
     stock: Int!
+    deleted: Boolean!
     createdAt: String!
     updatedAt: String!
     reviews: [Review!]

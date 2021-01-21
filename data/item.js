@@ -1,3 +1,4 @@
+/* eslint-disable no-return-assign */
 const casual = require('casual')
 const userData = require('./user')
 
@@ -12,13 +13,14 @@ casual.define('item', sellerId => ({
     'https://images-na.ssl-images-amazon.com/images/I/51p9Db%2BvSoL._AC_SY355_.jpg',
     'https://m.media-amazon.com/images/I/71J25IccAdL._AC_SY355_.jpg',
     'https://images-na.ssl-images-amazon.com/images/I/81UOcL2ZFyL._AC_SY355_.jpg',
-    'https://images-na.ssl-images-amazon.com/images/I/81d7hnqa83L._AC_SX425_.jpg'
+    'https://images-na.ssl-images-amazon.com/images/I/81d7hnqa83L._AC_SX425_.jpg',
   ]),
   description: casual.sentence,
   soldOut: false,
   stock: casual.integer(from = 1, to = 100),
   createdAt: casual.moment,
   updatedAt: casual.moment,
+  deleted: false,
 }))
 
 const itemData = []
