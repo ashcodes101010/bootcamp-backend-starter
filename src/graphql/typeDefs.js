@@ -10,7 +10,7 @@ module.exports = gql`
     addCartItem(input: CartInput): Cart!
     removeCartItem(input: CartInput): Cart!
 
-    updateItem(input: ItemInput!): Item!
+    updateItem(id: ID!, input: ItemInput!): Item!
     createItem(input: ItemInput!): Item!
     deleteItem(input: ItemInput!): Item!
 
@@ -100,7 +100,7 @@ module.exports = gql`
     imgUrl: String!
     description: String!
     price: Float!
-    tags: [String!]
+    tags: [TagInput!]!
     stock: Int!
   }
  
