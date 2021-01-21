@@ -7,6 +7,10 @@ module.exports = gql`
     updatePass(id: ID!, password: String!): User!
     addMoney(id: ID!, money: Float!): User!
 
+    createUser(input: User!): User!
+    addMoney(id: String!, money: Float!): User!
+    changePassword(id: String!, password: String!): User!
+
     addCartItem(input: CartInput): Cart!
     removeCartItem(id: ID!): Cart!
 
@@ -130,6 +134,13 @@ module.exports = gql`
     user: User!
   }
  
+  input RegisterInput {
+    email: String!
+    username: String!
+    age: Int!
+    password: String!
+  }
+
   input AddressInput {
     street: String!
     city: String!
