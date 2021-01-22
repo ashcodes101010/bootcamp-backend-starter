@@ -143,6 +143,5 @@ module.exports = gql`
     username: String!
     age: Int!
     password: String!
-    address: AddressInput!
   }
 `

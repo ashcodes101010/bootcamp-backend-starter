@@ -40,32 +40,22 @@ const login = async (obj, { email, password }) => {
   return { user, token }
 }
 
-const register = async (obj, { input: { username, email, password, age, address: { street, city, state, zip, country } }}) => {
+const register = async (obj, { input: { username, email, password, age }}) => {
+  console.log(username, email, password, age)
   const emailExists = await User.query().findOne({ email })
   if (emailExists) {
-    throw new UserInputError('Email is already in use')
+    throw new Error('Email is already in use')
   }
   const passwordHash = await hashPassword(password)
 
-  const user = await User.query().insertAndFetch({
+  const user = await User.query().insert({
     email,
     username,
     password: passwordHash,
     age,
-  }).returning('id')
+  }).returning('*')
 
-  const addressDetails = await Address.query().insertAndFetch({
-    street,
-    city,
-    state,
-    zip,
-    country,
-    user: user
-  }).returning('id')
-
-  const addAddressId = await User.query().patch({
-    address: { addressDetails }
-  })
+  const userId = await User.query().select('id').findOne('email', email)
 
   // If successful registration, set authentication information
   const payload = {
@@ -73,7 +63,8 @@ const register = async (obj, { input: { username, email, password, age, address:
   }
   const token = createToken(payload)
   
-  return { user, addressDetails, addAddressId, token }
+  // return { user, addressDetails, addAddressId, token }
+  return { user, token }
 }
 
 const resolver = {
