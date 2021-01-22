@@ -1,5 +1,4 @@
 const BaseModel = require('./BaseModel')
-const User = require('./User')
 const { BelongsToOneRelation } = require('./BaseModel')
 
 class Address extends BaseModel {
@@ -7,7 +6,7 @@ class Address extends BaseModel {
     return 'addresses'
   }
   static get relationMappings() {
-    const Author = require('./User')
+    const User = require('./User')
 
     return {
       user: {

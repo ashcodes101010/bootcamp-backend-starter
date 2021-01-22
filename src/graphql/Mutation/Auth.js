@@ -64,7 +64,7 @@ const register = async (obj, { input: { username, email, password, age, address:
   }).returning('id')
 
   const addAddressId = await User.query().patch({
-    address: addressDetails
+    address: { addressDetails }
   })
 
   // If successful registration, set authentication information
@@ -72,39 +72,7 @@ const register = async (obj, { input: { username, email, password, age, address:
     id: user.id,
   }
   const token = createToken(payload)
-
-
-
-
-  // try {
-  //   const trans = await knex.transaction(async trx => {
-  //     const create = await Address.query(trx).insert({
-  //       street,
-  //       city,
-  //       state,
-  //       zip,
-  //       country
-  //     }).returning('*')
-  //     await Promise.all(tags.map(async tag => {
-  //       await User.query(trx).insert({
-  //         addressId: create.id,
-  //         tag: tag.tag,
-  //       })
-  //     }))
-  //     return create
-  //   })
-  //   return trans
-  // } catch (err) {
-  //   throw new Error(err)
-  // }
-
-
-
-
-
-
-
-
+  
   return { user, addressDetails, addAddressId, token }
 }
 
