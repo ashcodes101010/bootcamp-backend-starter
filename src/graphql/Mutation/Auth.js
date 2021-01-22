@@ -1,4 +1,3 @@
-const { UserInputError } = require('apollo-server-express')
 const User = require('../../models/User')
 const {
   hashPassword, comparePassword, createToken,
@@ -7,7 +6,7 @@ const {
 const updatePass = async (obj, { id, password }) => {
   const user = await User.query().findById(id)
   if (!user) {
-    throw new UserInputError('User does not exist')
+    throw new Error('User does not exist')
   }
   const passwordHash = await hashPassword(password)
   const update = await User.query().findById(id).patch({
@@ -21,12 +20,12 @@ const login = async (obj, { email, password }) => {
     email,
   })
   if (!user) {
-    throw new UserInputError('Invalid email or password')
+    throw new Error('Invalid email or password')
   }
 
   const validPassword = await comparePassword(password, user.password)
   if (!validPassword) {
-    throw new UserInputError('Invalid email or password')
+    throw new Error('Invalid email or password')
   }
 
 
@@ -44,10 +43,22 @@ const register = async (obj, {
     username, email, password, age,
   },
 }) => {
-  console.log(username, email, password, age)
+  if (!age) {
+    throw new Error('Please enter a valid age')
+  }
+  if (age < 16) {
+    throw new Error('Must be 16+ to register')
+  }
+  if (password === '' || username === '' || email === '') {
+    throw new Error('Cannot leave blank fields')
+  }
   const emailExists = await User.query().findOne({ email })
   if (emailExists) {
     throw new Error('Email is already in use')
+  }
+  const usernameExists = await User.query().findOne({ username })
+  if (usernameExists) {
+    throw new Error('Username is already in use')
   }
   const passwordHash = await hashPassword(password)
 
@@ -57,8 +68,6 @@ const register = async (obj, {
     password: passwordHash,
     age,
   }).returning('*')
-
-  const userId = await User.query().select('id').findOne('email', email)
 
   // If successful registration, set authentication information
   const payload = {
