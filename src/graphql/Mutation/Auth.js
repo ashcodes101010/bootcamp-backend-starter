@@ -1,6 +1,5 @@
 const { UserInputError } = require('apollo-server-express')
 const User = require('../../models/User')
-const Address = require('../../models/Address')
 const {
   hashPassword, comparePassword, createToken,
 } = require('../../lib/auth')
@@ -40,7 +39,11 @@ const login = async (obj, { email, password }) => {
   return { user, token }
 }
 
-const register = async (obj, { input: { username, email, password, age }}) => {
+const register = async (obj, {
+  input: {
+    username, email, password, age,
+  },
+}) => {
   console.log(username, email, password, age)
   const emailExists = await User.query().findOne({ email })
   if (emailExists) {
@@ -62,7 +65,7 @@ const register = async (obj, { input: { username, email, password, age }}) => {
     id: user.id,
   }
   const token = createToken(payload)
-  
+
   // return { user, addressDetails, addAddressId, token }
   return { user, token }
 }
