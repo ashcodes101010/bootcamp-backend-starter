@@ -1,5 +1,6 @@
 const { UserInputError } = require('apollo-server-express')
 const User = require('../../models/User')
+const Address = require('../../models/Address')
 const {
   hashPassword, comparePassword, createToken,
 } = require('../../lib/auth')
@@ -39,24 +40,30 @@ const login = async (obj, { email, password }) => {
   return { user, token }
 }
 
-const register = async (obj, { input: { email, password } }) => {
+const register = async (obj, { input: { username, email, password, age }}) => {
+  console.log(username, email, password, age)
   const emailExists = await User.query().findOne({ email })
   if (emailExists) {
-    throw new UserInputError('Email is already in use')
+    throw new Error('Email is already in use')
   }
-
   const passwordHash = await hashPassword(password)
-  const user = await User.query().insertAndFetch({
+
+  const user = await User.query().insert({
     email,
+    username,
     password: passwordHash,
-  })
+    age,
+  }).returning('*')
+
+  const userId = await User.query().select('id').findOne('email', email)
 
   // If successful registration, set authentication information
   const payload = {
     id: user.id,
   }
   const token = createToken(payload)
-
+  
+  // return { user, addressDetails, addAddressId, token }
   return { user, token }
 }
 
