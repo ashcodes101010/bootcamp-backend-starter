@@ -17,7 +17,7 @@ const allItems = async () => {
 const searchItems = async (obj, { input }) => {
   const items = await Item
     .query()
-    .where('name', 'like', `%${input}%`)
+    .where(Item.raw('lower(name)'), 'like', `%${input.toLowerCase()}%`)
     .andWhere('deleted', false)
     .orderBy('name')
     .orderBy('description')
