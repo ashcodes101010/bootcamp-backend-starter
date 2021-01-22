@@ -6,23 +6,16 @@ const Cart = require('../../models/Cart')
 
 const decrementStock = async (obj, { id }) => {
   try {
-    const item = await Item.query().findById(id)
-    const update = await Item.query().findById(id).patch({
-      stock: Number(item.stock) - 1,
-    }).returning('*')
-    return update
-  } catch (err) {
-    throw new Error(err)
-  }
-}
-
-const incrementStock = async (obj, { id }) => {
-  try {
-    const item = await Item.query().findById(id)
-    const update = await Item.query().findById(id).patch({
-      stock: Number(item.stock) + 1,
-    }).returning('*')
-    return update
+    const trans = await knex.transaction(async trx => {
+      await Promise.all(id.map(async itemId => {
+        const item = await Item.query(trx).findById(itemId)
+        await Item.query(trx).findById(itemId).patch({
+          stock: Number(item.stock) - 1,
+        })
+      }))
+      return 'Data added'
+    })
+    return trans
   } catch (err) {
     throw new Error(err)
   }
@@ -120,7 +113,6 @@ const resolver = {
     createItem,
     deleteItem,
     decrementStock,
-    incrementStock,
   },
 }
 

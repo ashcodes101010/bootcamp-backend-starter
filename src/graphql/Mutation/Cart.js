@@ -32,8 +32,20 @@ const removeCartItem = async (obj, { id }) => {
   }
 }
 
+const clearCart = async (obj, { id }) => {
+  try {
+    const removeFromCart = await Cart.query()
+      .delete()
+      .where('userId', id)
+      .returning('*')
+    return removeFromCart
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
 const resolver = {
-  Mutation: { addCartItem, removeCartItem },
+  Mutation: { addCartItem, removeCartItem, clearCart },
 }
 
 module.exports = resolver

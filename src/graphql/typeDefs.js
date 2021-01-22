@@ -6,12 +6,14 @@ module.exports = gql`
     register(input: RegisterInput!): AuthReturn!
     updatePass(id: ID!, password: String!): User!
     addMoney(id: ID!, money: Float!): User!
+    removeMoney(id: ID!, money: Float!): User!
 
+    addTransactions(id: ID! items: [ID!]!): String!
     addCartItem(input: CartInput): Cart!
     removeCartItem(id: ID!): Cart!
+    clearCart(id: ID!): [Cart!]!
 
-    decrementStock(id: ID!): Item!
-    incrementStock(id: ID!): Item!
+    decrementStock(id: [ID!]!): String!
     updateItem(id: ID!, input: ItemInput!): Item!
     createItem(input: ItemInput!): Item!
     deleteItem(id: ID!): Item!
@@ -123,7 +125,6 @@ module.exports = gql`
   input TransactionInput {
     itemId: String!
     buyerId: String!
-    sellersId: [String!]!
   }
  
   type AuthReturn {
