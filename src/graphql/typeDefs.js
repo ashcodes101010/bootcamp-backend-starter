@@ -11,6 +11,7 @@ module.exports = gql`
     removeCartItem(id: ID!): Cart!
 
     decrementStock(id: ID!): Item!
+    incrementStock(id: ID!): Item!
     updateItem(id: ID!, input: ItemInput!): Item!
     createItem(input: ItemInput!): Item!
     deleteItem(id: ID!): Item!
@@ -84,7 +85,7 @@ module.exports = gql`
  
   type Cart {
     id: ID!
-    user: User!
+    user: User
     item: Item!
   }
  

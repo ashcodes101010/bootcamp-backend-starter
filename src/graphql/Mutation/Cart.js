@@ -21,12 +21,15 @@ const addCartItem = async (obj, { input: { userId, itemId } }) => {
 }
 
 const removeCartItem = async (obj, { id }) => {
-  const removeFromCart = await Cart
-    .query()
-    .delete()
-    .where('id', id)
-    .returning('*')
-  return removeFromCart
+  try {
+    const removeFromCart = await Cart.query()
+      .delete()
+      .findById(id)
+      .returning('*')
+    return removeFromCart
+  } catch (err) {
+    throw new Error(err)
+  }
 }
 
 const resolver = {
